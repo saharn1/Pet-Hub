@@ -1,14 +1,8 @@
 import React from 'react';
-import List from './components/List';
-import {SafeAreaView} from 'react-native';
-import GlobalStyles from './utils/GlobalStyles';
+import Navigator from './navigators/Navigator';
 
 const App = () => {
-  return (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      <List />
-    </SafeAreaView>
-  );
+  return <Navigator />;
 };
 
 export default App;
