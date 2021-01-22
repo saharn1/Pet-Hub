@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = ({navigation}) => {
-  const [isLoggedIn, setIsLoggedIn] = useContext(MainContext);
-  console.log('profile', isLoggedIn);
+  const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
+  console.log('profile isLoggedIn?', isLoggedIn);
+  console.log('profile user data', user);
   const logout = async () => {
     setIsLoggedIn(false);
     await AsyncStorage.clear();
@@ -18,6 +19,9 @@ const Profile = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
+      <Text>Name: {user.username}</Text>
+      <Text>Email: {user.email}</Text>
+      {/* <Text>id: {user.user_id}</Text> */}
       <Button title={'Logout'} onPress={logout} />
     </SafeAreaView>
   );
