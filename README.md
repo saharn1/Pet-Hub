@@ -4,4 +4,4 @@ We are going to create an app that can quickly and conveniently for target peopl
 
 Ziang Zhao
 Maksim Pasnitsenko
-Sahar Nagar,
+Sahar Nagar
