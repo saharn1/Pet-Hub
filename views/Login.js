@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,12 +31,14 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-      <LoginForm navigation={navigation} />
-      <Text>Register</Text>
-      <RegisterForm navigation={navigation} />
-    </View>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.container}>
+        <Text>Login</Text>
+        <LoginForm navigation={navigation} />
+        <Text>Register</Text>
+        <RegisterForm navigation={navigation} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
