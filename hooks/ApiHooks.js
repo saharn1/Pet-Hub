@@ -1,6 +1,15 @@
 import {useEffect, useState} from 'react';
 import {baseUrl} from '../utils/Variables';
 
+// general function for fetching (fetchOptions default value is empty object)
+const doFetch = async (url, options = {}) => {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error('doFetch failed');
+  }
+  return await response.json();
+};
+
 const useLoadMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
 
@@ -38,42 +47,17 @@ const useLogin = () => {
       body: JSON.stringify(userCredentials),
     };
     try {
-      const response = await fetch(baseUrl + 'login', options);
-      const userData = await response.json();
-      console.log('postLogin response status', response.status);
-      console.log('postLogin userData', userData);
-      if (response.ok) {
-        return userData;
-      } else {
-        throw new Error(userData.message);
-      }
+      const userData = await doFetch(baseUrl + 'login', options);
+      return userData;
     } catch (error) {
       throw new Error(error.message);
     }
   };
 
-  const checkToken = async (token) => {
-    try {
-      const options = {
-        method: 'GET',
-        headers: {'x-access-token': token},
-      };
-      const response = await fetch(baseUrl + 'users/user', options);
-      const userData = response.json();
-      if (response.ok) {
-        return userData;
-      } else {
-        throw new Error(userData.message);
-      }
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
-
-  return {postLogin, checkToken};
+  return {postLogin};
 };
 
-const useRegister = () => {
+const useUser = () => {
   const postRegister = async (inputs) => {
     console.log('trying to create user', inputs);
     const fetchOptions = {
@@ -97,7 +81,26 @@ const useRegister = () => {
       throw new Error(e.message);
     }
   };
-  return {postRegister};
+
+  const checkToken = async (token) => {
+    try {
+      const options = {
+        method: 'GET',
+        headers: {'x-access-token': token},
+      };
+      const response = await fetch(baseUrl + 'users/user', options);
+      const userData = response.json();
+      if (response.ok) {
+        return userData;
+      } else {
+        throw new Error(userData.message);
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {postRegister, checkToken};
 };
 
-export {useLoadMedia, useLogin, useRegister};
+export {useLoadMedia, useLogin, useUser};
