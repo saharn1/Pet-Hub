@@ -1,12 +1,12 @@
 import React from 'react';
-import {Alert, Button, View} from 'react-native';
+import {Alert, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {useLogin, useUser} from '../hooks/ApiHooks';
-import FormTextInput from './FormTextInput';
 import useSignUpForm from '../hooks/RegisterHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
+import {Input, Button} from 'react-native-elements';
 
 const RegisterForm = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -32,23 +32,23 @@ const RegisterForm = ({navigation}) => {
 
   return (
     <View>
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="username"
         onChangeText={(txt) => handleInputChange('username', txt)}
       />
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="password"
         onChangeText={(txt) => handleInputChange('password', txt)}
         secureTextEntry={true}
       />
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="email"
         onChangeText={(txt) => handleInputChange('email', txt)}
       />
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="full name"
         onChangeText={(txt) => handleInputChange('full_name', txt)}

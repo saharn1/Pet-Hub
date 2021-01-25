@@ -1,18 +1,11 @@
+// this is not used anymore (for now?)
 import React from 'react';
-import {StyleSheet, TextInput} from 'react-native';
 import PropTypes from 'prop-types';
+import {Input} from 'react-native-elements';
 
 const FormTextInput = ({style, ...otherProps}) => {
-  return <TextInput style={[styles.textInput, style]} {...otherProps} />;
+  return <Input style={style} {...otherProps} />;
 };
-
-const styles = StyleSheet.create({
-  textInput: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-  },
-});
 
 FormTextInput.propTypes = {
   style: PropTypes.object,
