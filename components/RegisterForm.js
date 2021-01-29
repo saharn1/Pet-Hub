@@ -13,8 +13,10 @@ const RegisterForm = ({navigation}) => {
   const {
     inputs,
     handleInputChange,
+    handleInputEnd,
     usernameError,
     checkUserAvailable,
+    registerErrors,
   } = useSignUpForm();
   const {postRegister} = useUser();
   const {postLogin} = useLogin();
@@ -43,25 +45,38 @@ const RegisterForm = ({navigation}) => {
         onChangeText={(txt) => handleInputChange('username', txt)}
         onEndEditing={(event) => {
           // console.log(event.nativeEvent.text);
-          checkUserAvailable(event);
+          // checkUserAvailable(event);
+          handleInputEnd('username', event.nativeEvent.text);
         }}
-        errorMessage={usernameError}
+        errorMessage={registerErrors.username}
       />
       <Input
         autoCapitalize="none"
         placeholder="password"
         onChangeText={(txt) => handleInputChange('password', txt)}
+        onEndEditing={(event) =>
+          handleInputEnd('password', event.nativeEvent.text)
+        }
         secureTextEntry={true}
+        errorMessage={registerErrors.password}
       />
       <Input
         autoCapitalize="none"
         placeholder="email"
         onChangeText={(txt) => handleInputChange('email', txt)}
+        onEndEditing={(event) =>
+          handleInputEnd('email', event.nativeEvent.text)
+        }
+        errorMessage={registerErrors.email}
       />
       <Input
         autoCapitalize="none"
         placeholder="full name"
         onChangeText={(txt) => handleInputChange('full_name', txt)}
+        onEndEditing={(event) =>
+          handleInputEnd('full_name', event.nativeEvent.text)
+        }
+        errorMessage={registerErrors.full_name}
       />
       <Button title="Register!" onPress={doRegister} />
     </View>
