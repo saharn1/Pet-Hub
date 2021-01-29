@@ -10,7 +10,12 @@ import {Input, Button} from 'react-native-elements';
 
 const RegisterForm = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
-  const {inputs, handleInputChange} = useSignUpForm();
+  const {
+    inputs,
+    handleInputChange,
+    usernameError,
+    checkUserAvailable,
+  } = useSignUpForm();
   const {postRegister} = useUser();
   const {postLogin} = useLogin();
 
@@ -37,9 +42,10 @@ const RegisterForm = ({navigation}) => {
         placeholder="username"
         onChangeText={(txt) => handleInputChange('username', txt)}
         onEndEditing={(event) => {
-          console.log(event.nativeEvent.text);
+          // console.log(event.nativeEvent.text);
+          checkUserAvailable(event);
         }}
-        errorMessage="some state variable"
+        errorMessage={usernameError}
       />
       <Input
         autoCapitalize="none"
