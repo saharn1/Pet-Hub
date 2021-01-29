@@ -36,6 +36,10 @@ const RegisterForm = ({navigation}) => {
         autoCapitalize="none"
         placeholder="username"
         onChangeText={(txt) => handleInputChange('username', txt)}
+        onEndEditing={(event) => {
+          console.log(event.nativeEvent.text);
+        }}
+        errorMessage="some state variable"
       />
       <Input
         autoCapitalize="none"
