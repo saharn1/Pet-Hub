@@ -21,6 +21,9 @@ const constraints = {
       message: 'min length is 5 characters',
     },
   },
+  confirmPassword: {
+    equality: 'password',
+  },
   email: {
     presence: {
       message: 'cannot be empty',
@@ -38,7 +41,6 @@ const constraints = {
 };
 
 const useSignUpForm = (callback) => {
-  const [usernameError, setUsernameError] = useState('');
   const [registerErrors, setRegisterErrors] = useState({});
   const {checkIsUserAvailable} = useUser();
 
@@ -65,7 +67,22 @@ const useSignUpForm = (callback) => {
     if (text === '') {
       text = null;
     }
-    const error = validator(name, text, constraints);
+    let error;
+    if (name === 'confirmPassword') {
+      error = validator(
+        name,
+        {
+          password: inputs.password,
+          confirmPassword: text,
+        },
+        constraints
+      );
+      // console.log('checking confirm pw', error);
+    } else {
+      error = validator(name, text, constraints);
+      // console.log('checking something else', error);
+    }
+
     setRegisterErrors((registerErrors) => {
       return {
         ...registerErrors,
@@ -79,22 +96,62 @@ const useSignUpForm = (callback) => {
     try {
       const result = await checkIsUserAvailable(event.nativeEvent.text);
       if (!result) {
-        setUsernameError('Username already exists');
-      } else {
-        setUsernameError('');
+        setRegisterErrors((registerErrors) => {
+          return {
+            ...registerErrors,
+            username: 'Username already exists',
+          };
+        });
       }
     } catch (error) {
       console.error('reg checkUserAvailable', error);
     }
   };
 
+  const validateOnSend = () => {
+    const usernameError = validator('username', inputs.username, constraints);
+    const passwordError = validator('password', inputs.password, constraints);
+    const confirmError = validator(
+      'confirmPassword',
+      {
+        password: inputs.password,
+        confirmPassword: inputs.confirmPassword,
+      },
+      constraints
+    );
+    const emailError = validator('email', inputs.email, constraints);
+    const fullnameError = validator('full_name', inputs.full_name, constraints);
+
+    setRegisterErrors((registerErrors) => {
+      return {
+        ...registerErrors,
+        username: usernameError,
+        password: passwordError,
+        confirmPassword: confirmError,
+        email: emailError,
+        full_name: fullnameError,
+      };
+    });
+
+    if (
+      usernameError !== null ||
+      passwordError !== null ||
+      confirmError !== null ||
+      emailError !== null ||
+      fullnameError !== null
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   return {
     handleInputChange,
     handleInputEnd,
     inputs,
-    usernameError,
     checkUserAvailable,
     registerErrors,
+    validateOnSend,
   };
 };
 

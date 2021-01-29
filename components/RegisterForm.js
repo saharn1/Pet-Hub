@@ -14,14 +14,20 @@ const RegisterForm = ({navigation}) => {
     inputs,
     handleInputChange,
     handleInputEnd,
-    usernameError,
     checkUserAvailable,
     registerErrors,
+    validateOnSend,
   } = useSignUpForm();
   const {postRegister} = useUser();
   const {postLogin} = useLogin();
 
   const doRegister = async () => {
+    if (!validateOnSend()) {
+      Alert.alert('Input validation failed!');
+      console.log('validate on send failed');
+      return;
+    }
+    delete inputs.confirmPassword;
     try {
       const result = await postRegister(inputs);
       console.log('doRegister ok', result.message);
@@ -45,7 +51,7 @@ const RegisterForm = ({navigation}) => {
         onChangeText={(txt) => handleInputChange('username', txt)}
         onEndEditing={(event) => {
           // console.log(event.nativeEvent.text);
-          // checkUserAvailable(event);
+          checkUserAvailable(event);
           handleInputEnd('username', event.nativeEvent.text);
         }}
         errorMessage={registerErrors.username}
@@ -59,6 +65,16 @@ const RegisterForm = ({navigation}) => {
         }
         secureTextEntry={true}
         errorMessage={registerErrors.password}
+      />
+      <Input
+        autoCapitalize="none"
+        placeholder="confirm password"
+        onChangeText={(txt) => handleInputChange('confirmPassword', txt)}
+        onEndEditing={(event) =>
+          handleInputEnd('confirmPassword', event.nativeEvent.text)
+        }
+        secureTextEntry={true}
+        errorMessage={registerErrors.confirmPassword}
       />
       <Input
         autoCapitalize="none"

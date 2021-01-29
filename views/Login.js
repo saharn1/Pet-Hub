@@ -41,50 +41,51 @@ const Login = ({navigation}) => {
 
   return (
     <ScrollView>
-      <KeyboardAvoidingView
+      {/* disabled by teacher for android testing */}
+      {/* <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         enabled
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.inner}>
-            <View style={styles.appTitle}>
-              <Text h4>MyApp</Text>
-            </View>
-            <View style={styles.form}>
-              <Card>
-                {formToggle ? (
-                  <>
-                    <Card.Title h5>Login</Card.Title>
-                    <Card.Divider />
-                    <LoginForm navigation={navigation} />
-                  </>
-                ) : (
-                  <>
-                    <Card.Title h5>Register</Card.Title>
-                    <Card.Divider />
-                    <RegisterForm navigation={navigation} />
-                  </>
-                )}
-                <ListItem
-                  onPress={() => {
-                    setFormToggle(!formToggle);
-                  }}
-                >
-                  <ListItem.Content>
-                    <Text style={styles.text}>
-                      {formToggle
-                        ? 'No account? Register here.'
-                        : 'Already registered? Login here.'}
-                    </Text>
-                  </ListItem.Content>
-                  <ListItem.Chevron />
-                </ListItem>
-              </Card>
-            </View>
+      > */}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inner}>
+          <View style={styles.appTitle}>
+            <Text h4>MyApp</Text>
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+          <View style={styles.form}>
+            <Card>
+              {formToggle ? (
+                <>
+                  <Card.Title h5>Login</Card.Title>
+                  <Card.Divider />
+                  <LoginForm navigation={navigation} />
+                </>
+              ) : (
+                <>
+                  <Card.Title h5>Register</Card.Title>
+                  <Card.Divider />
+                  <RegisterForm navigation={navigation} />
+                </>
+              )}
+              <ListItem
+                onPress={() => {
+                  setFormToggle(!formToggle);
+                }}
+              >
+                <ListItem.Content>
+                  <Text style={styles.text}>
+                    {formToggle
+                      ? 'No account? Register here.'
+                      : 'Already registered? Login here.'}
+                  </Text>
+                </ListItem.Content>
+                <ListItem.Chevron />
+              </ListItem>
+            </Card>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+      {/* </KeyboardAvoidingView> */}
     </ScrollView>
   );
 };
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inner: {
-    padding: 24,
+    padding: 12,
     flex: 1,
     justifyContent: 'space-around',
   },
