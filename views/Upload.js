@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Platform, ScrollView} from 'react-native';
+import {KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
 import {Input, Text, Image, Button, Card} from 'react-native-elements';
 import useUploadForm from '../hooks/UploadHooks';
 import * as ImagePicker from 'expo-image-picker';
@@ -64,26 +64,30 @@ const Upload = () => {
 
   return (
     <ScrollView>
-      <Text h4>Upload media file</Text>
-      {image && (
-        <Image
-          source={{uri: image}}
-          style={{width: '100%', height: undefined, aspectRatio: 1}}
-        />
-      )}
-      <Input
-        placeholder="title"
-        value={inputs.title}
-        onChangeText={(txt) => handleInputChange('title', txt)}
-      />
-      <Input
-        placeholder="description"
-        value={inputs.description}
-        onChangeText={(txt) => handleInputChange('description', txt)}
-      />
-      <Button title="Choose from library" onPress={() => pickImage(true)} />
-      <Button title="Use camera" onPress={() => pickImage(false)} />
-      <Button title="Upload file" onPress={doUpload} />
+      <KeyboardAvoidingView behavior="position" enabled>
+        <Card>
+          <Text h4>Upload media file</Text>
+          {image && (
+            <Image
+              source={{uri: image}}
+              style={{width: '100%', height: undefined, aspectRatio: 1}}
+            />
+          )}
+          <Input
+            placeholder="title"
+            value={inputs.title}
+            onChangeText={(txt) => handleInputChange('title', txt)}
+          />
+          <Input
+            placeholder="description"
+            value={inputs.description}
+            onChangeText={(txt) => handleInputChange('description', txt)}
+          />
+          <Button title="Choose from library" onPress={() => pickImage(true)} />
+          <Button title="Use camera" onPress={() => pickImage(false)} />
+          <Button title="Upload file" onPress={doUpload} />
+        </Card>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
