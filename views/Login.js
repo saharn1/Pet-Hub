@@ -6,6 +6,7 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  ImageBackground,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
@@ -14,7 +15,6 @@ import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import {Card, ListItem, Text} from 'react-native-elements';
-import {ScrollView} from 'react-native-gesture-handler';
 
 const Login = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -40,43 +40,49 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={'padding'} enabled>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      enabled
+    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
-          <View style={styles.appTitle}>
-            <Text h4>MyApp</Text>
-          </View>
-          <View style={styles.form}>
-            <Card>
-              {formToggle ? (
-                <>
-                  <Card.Title h5>Login</Card.Title>
-                  <Card.Divider />
-                  <LoginForm navigation={navigation} />
-                </>
-              ) : (
-                <>
-                  <Card.Title h5>Register</Card.Title>
-                  <Card.Divider />
-                  <RegisterForm navigation={navigation} />
-                </>
-              )}
-              <ListItem
-                onPress={() => {
-                  setFormToggle(!formToggle);
-                }}
-              >
-                <ListItem.Content>
-                  <Text style={styles.text}>
-                    {formToggle
-                      ? 'No account? Register here.'
-                      : 'Already registered? Login here.'}
-                  </Text>
-                </ListItem.Content>
-                <ListItem.Chevron />
-              </ListItem>
-            </Card>
-          </View>
+          <ImageBackground
+            source={require('../assets/bg.png')}
+            style={styles.image}
+          >
+            <View style={styles.form}>
+              <Card>
+                {formToggle ? (
+                  <>
+                    <Card.Title h5>Login</Card.Title>
+                    <Card.Divider />
+                    <LoginForm navigation={navigation} />
+                  </>
+                ) : (
+                  <>
+                    <Card.Title h5>Register</Card.Title>
+                    <Card.Divider />
+                    <RegisterForm navigation={navigation} />
+                  </>
+                )}
+                <ListItem
+                  onPress={() => {
+                    setFormToggle(!formToggle);
+                  }}
+                >
+                  <ListItem.Content>
+                    <Text style={styles.text}>
+                      {formToggle
+                        ? 'No account? Register here.'
+                        : 'Already registered? Login here.'}
+                    </Text>
+                  </ListItem.Content>
+                  <ListItem.Chevron />
+                </ListItem>
+              </Card>
+            </View>
+          </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -88,17 +94,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inner: {
-    padding: 12,
     flex: 1,
-    justifyContent: 'space-around',
   },
-  appTitle: {
+  image: {
     flex: 1,
+    resizeMode: 'cover',
     justifyContent: 'center',
-    alignItems: 'center',
   },
   form: {
-    flex: 6,
+    flex: 1,
+    justifyContent: 'center',
   },
   text: {
     alignSelf: 'center',
