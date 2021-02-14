@@ -164,6 +164,23 @@ const useMedia = () => {
     }
   };
 
+  const updateFile = async (fileId, fileInfo, token) => {
+    const options = {
+      method: 'PUT',
+      headers: {
+        'x-access-token': token,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(fileInfo),
+    };
+    try {
+      const result = await doFetch(baseUrl + 'media/' + fileId, options);
+      return result;
+    } catch (error) {
+      throw new Error('updateFile error: ' + error.message);
+    }
+  };
+
   const deleteFile = async (fileId, token) => {
     const options = {
       method: 'DELETE',
@@ -177,7 +194,7 @@ const useMedia = () => {
     }
   };
 
-  return {upload, deleteFile};
+  return {upload, updateFile, deleteFile};
 };
 
 export {useLoadMedia, useLogin, useUser, useTag, useMedia};

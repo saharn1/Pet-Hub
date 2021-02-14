@@ -54,7 +54,10 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
         <RNEListItem.Subtitle>{singleMedia.description}</RNEListItem.Subtitle>
         {isMyFile && (
           <>
-            <Button title="Modify" onPress={() => {}}></Button>
+            <Button
+              title="Modify"
+              onPress={() => navigation.push('Modify', {file: singleMedia})}
+            ></Button>
             <Button title="Delete" color="red" onPress={doDelete}></Button>
           </>
         )}
