@@ -55,9 +55,9 @@ const Profile = ({navigation}) => {
           <Text>{user.full_name}</Text>
         </ListItem>
         <ListItem  onPress={() => console.log('user likes')}>
-          <Avatar icon={{name: 'heartbeat',type:'font-awesome', color: '#1ABBD1'}} />
+          <Avatar icon={{name: 'crow',type:'font-awesome-5', color: '#1ABBD1'}} />
           <ListItem.Content>
-            <ListItem.Title>My likes</ListItem.Title>
+            <ListItem.Title>My pet cart</ListItem.Title>
           </ListItem.Content>
           <ListItem.Chevron />
         </ListItem>

@@ -51,6 +51,9 @@ const TabScreen = () => {
       tabBarOptions={{
         activeTintColor: '#1ABBD1',
         inactiveTintColor: 'gray',
+        style: {
+          backgroundColor: 'pink',//color you want to change
+        }
       }}
     >
       <Tab.Screen name="Pet-List" component={Home} />
@@ -71,6 +74,15 @@ const StackScreen = () => {
             component={TabScreen}
             options={({route}) => ({
               headerTitle: getFocusedRouteNameFromRoute(route),
+              headerTintColor: '#fff',
+              headerStyle: {
+                backgroundColor: 'pink',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize:25,
+                fontFamily:"",
+              },
             })}
           />
           <Stack.Screen name="Modify" component={Modify} />

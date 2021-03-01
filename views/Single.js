@@ -88,8 +88,8 @@ const Single = ({route}) => {
   }, [videoRef]);
 
   return (
-    <ScrollView>
-      <Card containerStyle={{backgroundColor: 'lightcyan'}}>
+    <ScrollView style={{backgroundColor:"pink"}}>
+      <Card containerStyle={{backgroundColor: 'lightcyan'}} borderBottomLeftRadius={54}>
         <Card.Title h4>{file.title}</Card.Title>
         <Card.Title>{moment(file.time_added).format('LLL')}</Card.Title>
         <Card.Divider />

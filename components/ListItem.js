@@ -13,14 +13,17 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
   // console.log(props);
   const {deleteFile} = useMedia();
   const {setUpdate, update} = useContext(MainContext);
-  var count = 0;
+
 
   const [like, setLike] = useState(true);
 
   const likesystem = () => {
     setLike(!like);
-  };
+    if(like){
+      Alert.alert("Message","You liked this pet!")
+    }
 
+  };
 
   const doDelete = () => {
     Alert.alert(
@@ -88,10 +91,10 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       <TouchableOpacity onPress={() => likesystem()}>
         <Icon
           raised
-          name={like ? 'thumbs-up' : 'thumbs-down'}
+          name={like ? 'thumbs-up' : 'thumbs-up' }
           size={20}
           type="font-awesome-5"
-          color={like ? 'red' : 'grey'}
+          color={like ? 'grey' : 'red'}
 
         />
       </TouchableOpacity>
@@ -102,8 +105,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
           color="grey"
           size={20}
           onPress={() => {
-            count++;
-            navigation.navigate('Picture', {file: singleMedia, number: count});
+            navigation.navigate('Picture', {file: singleMedia});
           }}
 containerStyle={{marginLeft:45}}
         />

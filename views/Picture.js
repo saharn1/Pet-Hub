@@ -122,10 +122,9 @@ const Picture = ({route}) => {
             size="37"
             containerStyle={{marginBottom:15}}
           />
-          <Text style={{justifyContent:"center",alignSelf:"center",marginLeft:6,marginBottom:10,color:"darkcyan"}}>Likes: {number}</Text>
         </View>
 
-       
+
         <Card.Divider />
         <ListItem containerStyle={{backgroundColor: '#FFDCDC'}}></ListItem>
       </Card>
