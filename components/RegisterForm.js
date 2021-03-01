@@ -6,7 +6,7 @@ import useSignUpForm from '../hooks/RegisterHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
-import {Input, Button} from 'react-native-elements';
+import {Input, Button, Icon, } from 'react-native-elements';
 
 const RegisterForm = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -47,7 +47,7 @@ const RegisterForm = ({navigation}) => {
     <View>
       <Input
         autoCapitalize="none"
-        placeholder="username"
+        placeholder="username:"
         onChangeText={(txt) => handleInputChange('username', txt)}
         onEndEditing={(event) => {
           // console.log(event.nativeEvent.text);
@@ -58,7 +58,7 @@ const RegisterForm = ({navigation}) => {
       />
       <Input
         autoCapitalize="none"
-        placeholder="password"
+        placeholder="password:"
         onChangeText={(txt) => handleInputChange('password', txt)}
         onEndEditing={(event) =>
           handleInputEnd('password', event.nativeEvent.text)
@@ -68,7 +68,7 @@ const RegisterForm = ({navigation}) => {
       />
       <Input
         autoCapitalize="none"
-        placeholder="confirm password"
+        placeholder="confirm password:"
         onChangeText={(txt) => handleInputChange('confirmPassword', txt)}
         onEndEditing={(event) =>
           handleInputEnd('confirmPassword', event.nativeEvent.text)
@@ -78,7 +78,7 @@ const RegisterForm = ({navigation}) => {
       />
       <Input
         autoCapitalize="none"
-        placeholder="email"
+        placeholder="email:"
         onChangeText={(txt) => handleInputChange('email', txt)}
         onEndEditing={(event) =>
           handleInputEnd('email', event.nativeEvent.text)
@@ -87,14 +87,31 @@ const RegisterForm = ({navigation}) => {
       />
       <Input
         autoCapitalize="none"
-        placeholder="full name"
+        placeholder="full name:"
         onChangeText={(txt) => handleInputChange('full_name', txt)}
         onEndEditing={(event) =>
           handleInputEnd('full_name', event.nativeEvent.text)
         }
         errorMessage={registerErrors.full_name}
       />
-      <Button title="Register!" onPress={doRegister} />
+      <Button
+        title="Register"
+        titleStyle={{
+          fontSize: 20,
+        }}
+        onPress={doRegister}
+        buttonStyle={{backgroundColor: '#1ABBD1'}}
+        containerStyle={{borderRadius: 20}}
+        icon={
+          <Icon
+            name="dove"
+            type="font-awesome-5"
+            size={20}
+            color="white"
+            style={{marginRight: 14, marginBottom: 3}}
+          />
+        }
+      />
     </View>
   );
 };

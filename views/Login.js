@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import {Card, ListItem, Text} from 'react-native-elements';
+import {Card, ListItem, Text, Icon, Image} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Login = ({navigation}) => {
@@ -54,16 +54,19 @@ const Login = ({navigation}) => {
               style={styles.image}
             >
               <View style={styles.form}>
-                <Card>
+                <Card containerStyle={{backgroundColor: 'lightcyan'}}>
                   {formToggle ? (
                     <>
-                      <Card.Title h5>Login</Card.Title>
+                      <Card.Title h3> Login</Card.Title>
                       <Card.Divider />
                       <LoginForm navigation={navigation} />
                     </>
                   ) : (
                     <>
-                      <Card.Title h5>Register</Card.Title>
+                      <Card.Title h3 style={{backgroundColor: 'lightcyan'}}>
+                        {' '}
+                        Register
+                      </Card.Title>
                       <Card.Divider />
                       <RegisterForm navigation={navigation} />
                     </>
@@ -72,12 +75,13 @@ const Login = ({navigation}) => {
                     onPress={() => {
                       setFormToggle(!formToggle);
                     }}
+                    containerStyle={{backgroundColor: 'lightcyan'}}
                   >
                     <ListItem.Content>
                       <Text style={styles.text}>
                         {formToggle
-                          ? 'No account? Register here.'
-                          : 'Already registered? Login here.'}
+                          ? "Don't have an account yet? Sign up here."
+                          : 'Already have an account? Log in here.'}
                       </Text>
                     </ListItem.Content>
                     <ListItem.Chevron />
@@ -113,7 +117,9 @@ const styles = StyleSheet.create({
   },
   text: {
     alignSelf: 'center',
-    padding: 20,
+    padding: 10,
+    color: 'black',
+    fontSize: 15,
   },
 });
 

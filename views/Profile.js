@@ -37,32 +37,39 @@ const Profile = ({navigation}) => {
 
   return (
     <ScrollView>
-      <Card>
+      <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
         <Card.Title>
-          <Text h1>{user.username}</Text>
+          <Text h1 style={{color:'white'}}>{user.username}</Text>
         </Card.Title>
         <Card.Image
           source={{uri: avatar}}
           style={styles.image}
           PlaceholderContent={<ActivityIndicator />}
         />
-        <ListItem>
-          <Avatar icon={{name: 'email', color: 'black'}} />
+        <ListItem >
+          <Avatar icon={{name: 'email', color: '#1ABBD1'}} />
           <Text>{user.email}</Text>
         </ListItem>
         <ListItem>
-          <Avatar icon={{name: 'user', type: 'font-awesome', color: 'black'}} />
+          <Avatar icon={{name: 'user', type: 'font-awesome', color: '#1ABBD1'}} />
           <Text>{user.full_name}</Text>
         </ListItem>
+        <ListItem  onPress={() => console.log('user likes')}>
+          <Avatar icon={{name: 'heartbeat',type:'font-awesome', color: '#1ABBD1'}} />
+          <ListItem.Content>
+            <ListItem.Title>My likes</ListItem.Title>
+          </ListItem.Content>
+          <ListItem.Chevron />
+        </ListItem>
         <ListItem bottomDivider onPress={() => navigation.push('My Files')}>
-          <Avatar icon={{name: 'perm-media', color: 'black'}} />
+          <Avatar icon={{name: 'perm-media', color: '#1ABBD1'}} />
           <ListItem.Content>
             <ListItem.Title>My Files</ListItem.Title>
           </ListItem.Content>
           <ListItem.Chevron />
         </ListItem>
         <ListItem bottomDivider onPress={logout}>
-          <Avatar icon={{name: 'logout', color: 'black'}} />
+          <Avatar icon={{name: 'logout', color: '#1ABBD1'}} />
           <ListItem.Content>
             <ListItem.Title>Logout</ListItem.Title>
           </ListItem.Content>

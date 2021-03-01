@@ -8,6 +8,7 @@ import {
 import Home from '../views/Home';
 import Profile from '../views/Profile';
 import Single from '../views/Single';
+import Picture from '../views/Picture'
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import {Icon} from 'react-native-elements';
@@ -21,25 +22,38 @@ const Stack = createStackNavigator();
 const TabScreen = () => {
   return (
     <Tab.Navigator
+      sceneContainerStyle={{backgroundColor: 'pink'}}
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
+
           switch (route.name) {
-            case 'Home':
-              iconName = 'home';
+            case 'Pet-List':
+              iconName = 'paw';
               break;
             case 'Profile':
-              iconName = 'account-box';
+              iconName = 'user-circle';
               break;
             case 'Upload':
-              iconName = 'cloud-upload';
+              iconName = 'arrow-circle-up';
               break;
           }
-          return <Icon name={iconName} size={size} color={color} />;
+          return (
+            <Icon
+              type="font-awesome"
+              name={iconName}
+              size={size}
+              color={color}
+            />
+          );
         },
       })}
+      tabBarOptions={{
+        activeTintColor: '#1ABBD1',
+        inactiveTintColor: 'gray',
+      }}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Pet-List" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Upload" component={Upload} />
     </Tab.Navigator>
@@ -62,6 +76,7 @@ const StackScreen = () => {
           <Stack.Screen name="Modify" component={Modify} />
           <Stack.Screen name="My Files" component={MyFiles} />
           <Stack.Screen name="Single" component={Single} />
+          <Stack.Screen name="Picture" component={Picture} />
         </>
       ) : (
         <>

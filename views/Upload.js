@@ -120,8 +120,11 @@ const Upload = ({navigation}) => {
   return (
     <ScrollView>
       <KeyboardAvoidingView behavior="position" enabled>
-        <Card>
-          <Text h4>Upload media file</Text>
+        <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
+          <Text h4 style={{alignSelf:'center'}}>
+
+            Upload media file
+          </Text>
           {image && (
             <>
               {filetype === 'image' ? (
@@ -150,8 +153,16 @@ const Upload = ({navigation}) => {
             onChangeText={(txt) => handleInputChange('description', txt)}
             errorMessage={uploadErrors.description}
           />
-          <Button title="Choose from library" onPress={() => pickImage(true)} />
-          <Button title="Use camera" onPress={() => pickImage(false)} />
+          <Button
+            title="Choose from library"
+            onPress={() => pickImage(true)}
+            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20}}
+          />
+          <Button
+            title="Use camera"
+            onPress={() => pickImage(false)}
+            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20}}
+          />
           {isUploading && <ActivityIndicator size="large" color="#0000ff" />}
           <Button
             title="Upload file"
@@ -161,8 +172,13 @@ const Upload = ({navigation}) => {
               uploadErrors.description !== null ||
               image === null
             }
+            buttonStyle={{backgroundColor: 'darkorange', size: 20,marginBottom:20}}
           />
-          <Button title="Reset" onPress={doReset} />
+          <Button
+            title="Reset"
+            onPress={doReset}
+            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20}}
+          />
         </Card>
       </KeyboardAvoidingView>
     </ScrollView>

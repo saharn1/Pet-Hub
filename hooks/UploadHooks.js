@@ -26,6 +26,7 @@ const useUploadForm = (callback) => {
   const [inputs, setInputs] = useState({
     title: '',
     description: '',
+    age: '',
   });
   const [uploadErrors, setUploadErrors] = useState({});
 

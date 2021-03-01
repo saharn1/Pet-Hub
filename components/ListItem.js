@@ -1,17 +1,26 @@
-import React, {useContext} from 'react';
+import React, {useContext,useState} from 'react';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/Variables';
-import {Avatar, ListItem as RNEListItem} from 'react-native-elements';
+import {Avatar, Icon, ListItem as RNEListItem} from 'react-native-elements';
 import {Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useMedia} from '../hooks/ApiHooks';
 import {MainContext} from '../contexts/MainContext';
-import {Alert} from 'react-native';
+import {Alert,TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
 
 const ListItem = ({navigation, singleMedia, isMyFile}) => {
   // console.log(props);
   const {deleteFile} = useMedia();
   const {setUpdate, update} = useContext(MainContext);
+  var count = 0;
+
+  const [like, setLike] = useState(true);
+
+  const likesystem = () => {
+    setLike(!like);
+  };
+
 
   const doDelete = () => {
     Alert.alert(
@@ -39,26 +48,100 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
 
   return (
     <RNEListItem
+      containerStyle={{
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 6,
+        },
+        shadowOpacity: 0.39,
+        shadowRadius: 8.3,
+
+        elevation: 13,
+      }}
       bottomDivider
       onPress={() => {
         navigation.navigate('Single', {file: singleMedia});
       }}
     >
-      <Avatar
-        size="large"
-        square
-        source={{uri: uploadsUrl + singleMedia.thumbnails.w160}}
-      ></Avatar>
+      <View>
+        <Avatar
+          size="xlarge"
+          rounded
+          containerStyle={{
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.39,
+            shadowRadius: 5.3,
+            elevation: 13,
+          }}
+          source={{uri: uploadsUrl + singleMedia.thumbnails.w160}}
+
+        >
+
+        </Avatar>
+
+            <View style={{flexDirection:"row",alignContent:"center"}}>
+      <TouchableOpacity onPress={() => likesystem()}>
+        <Icon
+          raised
+          name={like ? 'thumbs-up' : 'thumbs-down'}
+          size={20}
+          type="font-awesome-5"
+          color={like ? 'red' : 'grey'}
+
+        />
+      </TouchableOpacity>
+      <Icon
+          raised
+          name="plus"
+          type="font-awesome"
+          color="grey"
+          size={20}
+          onPress={() => {
+            count++;
+            navigation.navigate('Picture', {file: singleMedia, number: count});
+          }}
+containerStyle={{marginLeft:45}}
+        />
+    </View>
+
+      </View>
       <RNEListItem.Content>
-        <RNEListItem.Title h4>{singleMedia.title}</RNEListItem.Title>
-        <RNEListItem.Subtitle>{singleMedia.description}</RNEListItem.Subtitle>
+
+        <RNEListItem.Title h2 style={{alignSelf: 'center'}}>
+          {singleMedia.title}
+
+        </RNEListItem.Title>
+
+        <RNEListItem.Subtitle
+          style={{
+            alignSelf: 'center',
+            fontSize: 16,
+            marginTop: 10,
+            color: 'grey',
+          }}
+        >
+          {singleMedia.description}
+        </RNEListItem.Subtitle>
+
         {isMyFile && (
           <>
-            <Button
-              title="Modify"
-              onPress={() => navigation.push('Modify', {file: singleMedia})}
-            ></Button>
-            <Button title="Delete" color="red" onPress={doDelete}></Button>
+            <View style={{flexDirection: 'row', marginTop: 100}}>
+              <View style={{marginRight: 20}}>
+                <Button
+                  title="Modify"
+                  onPress={() => navigation.push('Modify', {file: singleMedia})}
+                  color="#1ABBD1"
+                ></Button>
+              </View>
+              <View>
+                <Button title="Delete" color="red" onPress={doDelete}></Button>
+              </View>
+            </View>
           </>
         )}
       </RNEListItem.Content>

@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "MyApp",
-    "slug": "MyApp",
+    "name": "Pethub2021",
+    "slug": "Pethub2021",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/adaptive-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/adaptive-icon.png",
       "resizeMode": "cover",
       "backgroundColor": "#5290c5"
     },

@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {View, Alert} from 'react-native';
-import {Input, Button} from 'react-native-elements';
+import {Input, Button, Icon} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,16 +32,36 @@ const LoginForm = ({navigation}) => {
     <View>
       <Input
         autoCapitalize="none"
-        placeholder="username"
+        placeholder="username:"
         onChangeText={(txt) => handleInputChange('username', txt)}
       />
       <Input
         autoCapitalize="none"
-        placeholder="password"
+        placeholder="password:"
         onChangeText={(txt) => handleInputChange('password', txt)}
         secureTextEntry={true}
       />
-      <Button title="Login" onPress={doLogin} loading={loading} />
+      <Button
+        title="Login"
+        titleStyle={{
+          fontSize: 20,
+        
+
+        }}
+        onPress={doLogin}
+        loading={loading}
+        buttonStyle={{backgroundColor: '#1ABBD1', size: 20}}
+        containerStyle={{borderRadius: 20}}
+        icon={
+          <Icon
+            name="cat"
+            type="font-awesome-5"
+            size={20}
+            color="white"
+            style={{marginRight: 14, marginBottom: 3}}
+          />
+        }
+      />
     </View>
   );
 };
