@@ -120,7 +120,7 @@ const Upload = ({navigation}) => {
   return (
     <ScrollView>
       <KeyboardAvoidingView behavior="position" enabled>
-        <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
+        <Card containerStyle={{backgroundColor: '#FFDCDC'}} borderBottomLeftRadius={54}>
           <Text h4 style={{alignSelf:'center'}}>
 
             Upload media file
@@ -156,12 +156,12 @@ const Upload = ({navigation}) => {
           <Button
             title="Choose from library"
             onPress={() => pickImage(true)}
-            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20}}
+            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20,borderRadius:20}}
           />
           <Button
             title="Use camera"
             onPress={() => pickImage(false)}
-            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20}}
+            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20,borderRadius:20}}
           />
           {isUploading && <ActivityIndicator size="large" color="#0000ff" />}
           <Button
@@ -172,12 +172,12 @@ const Upload = ({navigation}) => {
               uploadErrors.description !== null ||
               image === null
             }
-            buttonStyle={{backgroundColor: 'darkorange', size: 20,marginBottom:20}}
+            buttonStyle={{backgroundColor: 'darkorange', size: 20,marginBottom:20,borderRadius:20}}
           />
           <Button
             title="Reset"
             onPress={doReset}
-            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20}}
+            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20,borderRadius:20}}
           />
         </Card>
       </KeyboardAvoidingView>
