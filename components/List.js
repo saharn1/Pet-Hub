@@ -12,25 +12,25 @@ const List = ({navigation, myFilesOnly}) => {
   const mediaArray = useLoadMedia(myFilesOnly, user.user_id);
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const [masterDataSource, setMasterDataSource] = useState([]);
 
   useEffect(() => {
-    fetch('https://media-new.mw.metropolia.fi/wbma/').catch((error) => {
-      console.error(error);
-    });
-  }, []);
+    setFilteredDataSource(mediaArray);
+  }, [mediaArray]);
 
   const searchFilterFunction = (text) => {
+    // setMasterDataSource(mediaArray);
     // Check if searched text is not blank
     if (text) {
       // Inserted text is not blank
       // Filter the masterDataSource
       // Update FilteredDataSource
-      const newData = masterDataSource.filter(function (item) {
+      const newData = mediaArray.filter(function (item) {
         const itemData = item.title
           ? item.title.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
+        console.log('search filter result', itemData.indexOf(textData));
+
         return itemData.indexOf(textData) > -1;
       });
       setFilteredDataSource(newData);
@@ -38,7 +38,7 @@ const List = ({navigation, myFilesOnly}) => {
     } else {
       // Inserted text is blank
       // Update FilteredDataSource with masterDataSource
-      setFilteredDataSource(masterDataSource);
+      setFilteredDataSource(mediaArray);
       setSearch(text);
     }
   };
@@ -71,7 +71,8 @@ const List = ({navigation, myFilesOnly}) => {
     // Function for click on an item
     alert('Id : ' + item.id + ' Title : ' + item.title);
   };
-
+  console.log('search master data source', filteredDataSource);
+  // console.log('search media array', mediaArray);
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
@@ -85,7 +86,7 @@ const List = ({navigation, myFilesOnly}) => {
         />
 
         <FlatList
-          data={mediaArray.reverse()}
+          data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => (
             <ListItem

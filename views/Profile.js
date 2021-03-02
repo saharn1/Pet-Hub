@@ -13,7 +13,7 @@ const Profile = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
   const [avatar, setAvatar] = useState([setImage]);
   const [filetype, setFiletype] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState('https://placekitten.com/640');
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -61,6 +61,59 @@ const Profile = ({navigation}) => {
     }
   };
 
+  const doUpload = async () => {
+    const formData = new FormData();
+    // add text to formData
+    formData.append('title', 'something');
+
+    // add image to formData
+    const filename = image.split('/').pop();
+    const match = /\.(\w+)$/.exec(filename);
+    let type = match ? `${filetype}/${match[1]}` : filetype;
+    if (type === 'image/jpg') type = 'image/jpeg';
+    formData.append('file', {
+      uri: image,
+      name: filename,
+      type: type,
+    });
+    try {
+      setIsUploading(true);
+      const userToken = await AsyncStorage.getItem('userToken');
+      const resp = await upload(formData, userToken);
+      console.log('upload response', resp);
+      const tagResponse = await postTag(
+        {
+          file_id: resp.file_id,
+          tag: avatar_ + user.user_id,
+        },
+        userToken
+      );
+      console.log('posting app identifier', tagResponse);
+      Alert.alert(
+        'Upload',
+        'File uploaded',
+        [
+          {
+            text: 'Ok',
+            onPress: () => {
+              setUpdate(update + 1);
+              doReset();
+              navigation.navigate('Home');
+            },
+          },
+        ],
+        {cancelable: false}
+      );
+    } catch (error) {
+      Alert.alert('Upload', 'Failed');
+      console.error(error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  console.log(avatar);
+
   return (
     <ScrollView>
       <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
@@ -77,6 +130,7 @@ const Profile = ({navigation}) => {
           style={styles.image}
           PlaceholderContent={<ActivityIndicator />}
         />
+
         <ListItem>
           <Avatar icon={{name: 'email', color: '#1ABBD1'}} />
           <Text>{user.email}</Text>
