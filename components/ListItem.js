@@ -1,29 +1,38 @@
-import React, {useContext,useState} from 'react';
+import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/Variables';
 import {Avatar, Icon, ListItem as RNEListItem} from 'react-native-elements';
 import {Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useMedia} from '../hooks/ApiHooks';
+import {useMedia, useFavorite} from '../hooks/ApiHooks';
 import {MainContext} from '../contexts/MainContext';
-import {Alert,TouchableOpacity} from 'react-native';
+import {Alert, TouchableOpacity} from 'react-native';
 import {View} from 'react-native';
 
 const ListItem = ({navigation, singleMedia, isMyFile}) => {
   // console.log(props);
   const {deleteFile} = useMedia();
+  const {likeAnImage} = useFavorite();
   const {setUpdate, update} = useContext(MainContext);
-
-
   const [like, setLike] = useState(true);
 
-  const likesystem = () => {
+  const likesystem = async () => {
     setLike(!like);
-    if(like){
-      Alert.alert("Message","You liked this pet!")
+    if (like) {
+      Alert.alert('Message', 'You liked this pet!');
     }
-
   };
+
+  const doLike = async() => {
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      const resp = await likeAnImage( resp.file_id,userToken);
+      console.log('posting app identifier', resp);
+    } catch (error) {
+      Alert.alert('Like', 'Failed');
+      console.error(error);
+    }
+  }
 
   const doDelete = () => {
     Alert.alert(
@@ -82,41 +91,34 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             elevation: 13,
           }}
           source={{uri: uploadsUrl + singleMedia.thumbnails.w160}}
+        ></Avatar>
 
-        >
-
-        </Avatar>
-
-            <View style={{flexDirection:"row",alignContent:"center"}}>
-      <TouchableOpacity onPress={() => likesystem()}>
-        <Icon
-          raised
-          name={like ? 'thumbs-up' : 'thumbs-up' }
-          size={20}
-          type="font-awesome-5"
-          color={like ? 'grey' : 'red'}
-
-        />
-      </TouchableOpacity>
-      <Icon
-          raised
-          name="plus"
-          type="font-awesome"
-          color="grey"
-          size={20}
-          onPress={() => {
-            navigation.navigate('Picture', {file: singleMedia});
-          }}
-containerStyle={{marginLeft:45}}
-        />
-    </View>
-
+        <View style={{flexDirection: 'row', alignContent: 'center'}}>
+          <TouchableOpacity onPress={() => likesystem(),doLike}>
+            <Icon
+              raised
+              name={like ? 'thumbs-up' : 'thumbs-up'}
+              size={20}
+              type="font-awesome-5"
+              color={like ? 'grey' : 'red'}
+            />
+          </TouchableOpacity>
+          <Icon
+            raised
+            name="plus"
+            type="font-awesome"
+            color="grey"
+            size={20}
+            onPress={() => {
+              navigation.navigate('Picture', {file: singleMedia});
+            }}
+            containerStyle={{marginLeft: 45}}
+          />
+        </View>
       </View>
       <RNEListItem.Content>
-
         <RNEListItem.Title h2 style={{alignSelf: 'center'}}>
           {singleMedia.title}
-
         </RNEListItem.Title>
 
         <RNEListItem.Subtitle

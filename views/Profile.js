@@ -35,27 +35,7 @@ const Profile = ({navigation}) => {
       }
     };
     fetchAvatar();
-    getData();
   }, []);
-
-  const setData = async (result) => {
-    try {
-      const jsonValue = JSON.stringify(result)
-      await AsyncStorage.setItem('@storage_Key', jsonValue)
-    } catch (e) {
-      // saving error
-    }
-  }
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@storage_Key');
-      if (value !== null) {
-      }
-    } catch (e) {
-      console.log('getting data error');
-    }
-  };
 
   const pickImage = async (library) => {
     let result = null;
@@ -67,10 +47,10 @@ const Profile = ({navigation}) => {
     };
     if (library) {
       result = await ImagePicker.launchImageLibraryAsync(options);
-      setData(result);
+
     } else {
       result = await ImagePicker.launchCameraAsync(options);
-      setData(result);
+
     }
 
     console.log(result);

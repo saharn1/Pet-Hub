@@ -30,7 +30,7 @@ const Modify = ({navigation, route}) => {
     try {
       setIsUploading(true);
       const userToken = await AsyncStorage.getItem('userToken');
-      const resp = await updateFile(file.file_id, inputs, userToken);
+      const resp = await updateFile(file_id, userToken);
       console.log('update response', resp);
       setUpdate(update + 1);
       navigation.pop();

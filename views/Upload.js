@@ -22,6 +22,7 @@ const Upload = ({navigation}) => {
   const [isUploading, setIsUploading] = useState(false);
   const {upload} = useMedia();
   const {postTag} = useTag();
+
   const {update, setUpdate} = useContext(MainContext);
 
   const {handleInputChange, inputs, uploadErrors, reset} = useUploadForm();

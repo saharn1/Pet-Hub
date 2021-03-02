@@ -147,6 +147,25 @@ const useTag = () => {
   return {getFilesByTag, postTag};
 };
 
+const useFavorite = () => {
+  const likeAnImage = async (fileId, token) => {
+    const options = {
+      method: 'POST',
+      headers: {'x-access-token': token},
+      body: JSON.stringify({
+        file_id: fileId
+    }),
+    };
+    try {
+      const result = await doFetch(baseUrl + 'favourites/', options);
+      return result;
+    } catch (error) {
+      throw new Error('liked function error: ' + error.message);
+    }
+  };
+  return {likeAnImage}
+};
+
 const useMedia = () => {
   const upload = async (fd, token) => {
     const options = {
@@ -194,7 +213,9 @@ const useMedia = () => {
     }
   };
 
+
+
   return {upload, updateFile, deleteFile};
 };
 
-export {useLoadMedia, useLogin, useUser, useTag, useMedia};
+export {useLoadMedia, useLogin, useUser, useTag, useMedia, useFavorite};
