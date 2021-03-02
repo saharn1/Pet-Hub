@@ -117,6 +117,7 @@ const Single = ({route}) => {
         <ListItem containerStyle={{backgroundColor: 'lightcyan'}}>
           <Avatar source={{uri: avatar}} />
           <Text>{owner.username}</Text>
+          <Text>{owner.email}</Text>
         </ListItem>
       </Card>
     </ScrollView>

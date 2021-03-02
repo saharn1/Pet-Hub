@@ -47,21 +47,16 @@ const Profile = ({navigation}) => {
     };
     if (library) {
       result = await ImagePicker.launchImageLibraryAsync(options);
-
     } else {
       result = await ImagePicker.launchCameraAsync(options);
-
     }
 
     console.log(result);
-
 
     if (!result.cancelled) {
       setFiletype(result.type);
       setAvatar(result.uri);
     }
-
-
   };
 
   return (
