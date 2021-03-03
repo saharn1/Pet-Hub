@@ -17,20 +17,17 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
   const [like, setLike] = useState(true);
 
   const doLike = async () => {
-    setLike(!like);
-    if (like) {
-      Alert.alert('Message', 'You liked this pet!');
-    }
     try {
+      setLike(!like);
+      if (like) {
+        Alert.alert('Message', 'You liked this pet!');
+      }
       const userToken = await AsyncStorage.getItem('userToken');
-      const resp = await likeAnImage(flle_id,userToken);
+      const resp = await likeAnImage(flle_id, userToken);
       console.log('posting user like', resp);
-
     } catch (error) {
       console.log('error');
     }
-
-
   };
 
   const doDelete = () => {
@@ -93,7 +90,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
         ></Avatar>
 
         <View style={{flexDirection: 'row', alignContent: 'center'}}>
-          <TouchableOpacity onPress={ doLike}>
+          <TouchableOpacity onPress={doLike}>
             <Icon
               raised
               name={like ? 'thumbs-up' : 'thumbs-up'}
@@ -116,7 +113,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
         </View>
       </View>
       <RNEListItem.Content>
-        <RNEListItem.Title h2 style={{alignSelf: 'center'}}>
+        <RNEListItem.Title h2 style={{alignSelf: 'center', color: '#1ABBD1',}}>
           {singleMedia.title}
         </RNEListItem.Title>
 
@@ -125,7 +122,16 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             alignSelf: 'center',
             fontSize: 16,
             marginTop: 10,
-            color: 'grey',
+            color: 'gray',
+          }}
+        >
+          {singleMedia.media_type}
+        </RNEListItem.Subtitle>
+        <RNEListItem.Subtitle
+          style={{
+            alignSelf: 'center',
+            fontSize: 16,
+            marginTop: 10,
           }}
         >
           {singleMedia.description}

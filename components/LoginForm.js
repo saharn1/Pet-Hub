@@ -34,18 +34,20 @@ const LoginForm = ({navigation}) => {
         autoCapitalize="none"
         placeholder="username:"
         onChangeText={(txt) => handleInputChange('username', txt)}
+        leftIcon={{ type: 'font-awesome-5', name: 'user' ,color:"gray"}}
       />
       <Input
         autoCapitalize="none"
         placeholder="password:"
         onChangeText={(txt) => handleInputChange('password', txt)}
         secureTextEntry={true}
+        leftIcon={{ type: 'font-awesome-5', name: 'lock' ,color:"gray"}}
       />
       <Button
         title="Login"
         titleStyle={{
           fontSize: 20,
-        
+
 
         }}
         onPress={doLogin}

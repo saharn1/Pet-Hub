@@ -55,6 +55,7 @@ const RegisterForm = ({navigation}) => {
           handleInputEnd('username', event.nativeEvent.text);
         }}
         errorMessage={registerErrors.username}
+        leftIcon={{ type: 'font-awesome-5', name: 'user' ,color:"gray"}}
       />
       <Input
         autoCapitalize="none"
@@ -65,6 +66,7 @@ const RegisterForm = ({navigation}) => {
         }
         secureTextEntry={true}
         errorMessage={registerErrors.password}
+        leftIcon={{ type: 'font-awesome-5', name: 'lock' ,color:"gray"}}
       />
       <Input
         autoCapitalize="none"
@@ -75,6 +77,7 @@ const RegisterForm = ({navigation}) => {
         }
         secureTextEntry={true}
         errorMessage={registerErrors.confirmPassword}
+        leftIcon={{ type: 'font-awesome-5', name: 'lock' ,color:"gray"}}
       />
       <Input
         autoCapitalize="none"
@@ -84,6 +87,7 @@ const RegisterForm = ({navigation}) => {
           handleInputEnd('email', event.nativeEvent.text)
         }
         errorMessage={registerErrors.email}
+        leftIcon={{ type: 'font-awesome-5', name: 'envelope' ,color:"gray"}}
       />
       <Input
         autoCapitalize="none"
@@ -93,6 +97,7 @@ const RegisterForm = ({navigation}) => {
           handleInputEnd('full_name', event.nativeEvent.text)
         }
         errorMessage={registerErrors.full_name}
+        leftIcon={{ type: 'font-awesome-5', name: 'signature' ,color:"gray"}}
       />
       <Button
         title="Register"

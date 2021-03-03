@@ -88,10 +88,13 @@ const Single = ({route}) => {
   }, [videoRef]);
 
   return (
-    <ScrollView style={{backgroundColor:"pink"}}>
-      <Card containerStyle={{backgroundColor: 'lightcyan'}} borderBottomLeftRadius={54}>
-        <Card.Title h4>{file.title}</Card.Title>
-        <Card.Title>{moment(file.time_added).format('LLL')}</Card.Title>
+    <ScrollView style={{backgroundColor: 'pink'}}>
+      <Card
+        containerStyle={{backgroundColor: 'lightcyan' ,borderColor:"blue"}}
+        borderBottomLeftRadius={54}
+
+      >
+        <Card.Title h1> {file.title}</Card.Title>
         <Card.Divider />
         {file.media_type === 'image' ? (
           <Card.Image
@@ -114,11 +117,26 @@ const Single = ({route}) => {
         )}
         <Card.Divider />
         <Text style={styles.description}>{file.description}</Text>
-        <ListItem containerStyle={{backgroundColor: 'lightcyan'}}>
-          <Avatar source={{uri: avatar}} />
-          <Text>{owner.username}</Text>
-          <Text>{owner.email}</Text>
-        </ListItem>
+        <Card.Divider />
+
+        <Card.Title style={{color:"grey"}}>{moment(file.time_added).format('LLL')}</Card.Title>
+
+      </Card>
+
+      <Card
+        containerStyle={{backgroundColor: 'lightyellow', borderColor: 'blue'}}
+        borderTopRightRadius={54}
+      >
+        <Avatar source={{uri: avatar}} rounded size="large" />
+        <Card.Title h4>Contact Information</Card.Title>
+        <Card.Divider style={{backgroundColor: 'gold', height: 15}} />
+        <Text style={{marginBottom: 10}}>Owner name: {owner.username}</Text>
+        <Card.Divider style={{backgroundColor: 'blue'}} />
+        <Text style={{marginBottom: 10}}>Owner email: {owner.email}</Text>
+        <Card.Divider style={{backgroundColor: 'blue'}} />
+        <Text style={{marginBottom: 10}}>
+          Owner fullname: {owner.full_name}
+        </Text>
       </Card>
     </ScrollView>
   );
@@ -132,6 +150,7 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 10,
+    fontSize:19,
   },
 });
 
