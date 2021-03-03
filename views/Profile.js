@@ -63,7 +63,7 @@ const Profile = ({navigation}) => {
     <ScrollView>
       <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
         <Card.Title>
-          <Text h1 style={{color: 'black'}}>
+          <Text h1 style={{color: '#1ABBD1'}}>
             {user.username}
           </Text>
         </Card.Title>

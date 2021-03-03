@@ -142,16 +142,22 @@ const Upload = ({navigation}) => {
             </>
           )}
           <Input
+           label="title"
+           labelStyle={{color:"#1ABBD1"}}
             placeholder="title"
             value={inputs.title}
             onChangeText={(txt) => handleInputChange('title', txt)}
             errorMessage={uploadErrors.title}
+            leftIcon={{ type: 'font-awesome-5', name: 'file-signature' ,color:"gray"}}
           />
           <Input
             placeholder="description"
             value={inputs.description}
             onChangeText={(txt) => handleInputChange('description', txt)}
             errorMessage={uploadErrors.description}
+            leftIcon={{ type: 'font-awesome-5', name: 'comment-dots' ,color:"gray"}}
+            label="description"
+            labelStyle={{color:"#1ABBD1"}}
           />
           <Button
             title="Choose from library"

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/Variables';
-import {Avatar, Card, ListItem, Text} from 'react-native-elements';
+import {Avatar, Card, Text} from 'react-native-elements';
 import moment from 'moment';
 import {useTag, useUser} from '../hooks/ApiHooks';
 import {Video} from 'expo-av';
