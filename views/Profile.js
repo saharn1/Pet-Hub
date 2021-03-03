@@ -3,11 +3,19 @@ import {StyleSheet, ActivityIndicator} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Card, Text, ListItem, Avatar} from 'react-native-elements';
-import {useTag} from '../hooks/ApiHooks';
+import {
+  Card,
+  Text,
+  ListItem,
+  Avatar,
+  Button,
+  Icon,
+} from 'react-native-elements';
+import {useTag,use} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/Variables';
 import {ScrollView} from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
+
 
 const Profile = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
@@ -59,6 +67,10 @@ const Profile = ({navigation}) => {
     }
   };
 
+  const UploadImg = async () => {
+  avatar
+  };
+
   return (
     <ScrollView>
       <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
@@ -73,6 +85,14 @@ const Profile = ({navigation}) => {
           source={{uri: avatar}}
           style={styles.image}
           PlaceholderContent={<ActivityIndicator />}
+        />
+        <Button
+          icon={<Icon name="image" type="font-awesome-5" size={20} color="white" containerStyle={{marginHorizontal:10}}/>}
+          iconLeft
+          title="Change profile image"
+          buttonStyle={{backgroundColor:"orange"}}
+          raised
+          onPress={console.log("picture changed")}
         />
 
         <ListItem>

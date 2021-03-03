@@ -90,9 +90,8 @@ const Single = ({route}) => {
   return (
     <ScrollView style={{backgroundColor: 'pink'}}>
       <Card
-        containerStyle={{backgroundColor: 'lightcyan' ,borderColor:"blue"}}
+        containerStyle={{backgroundColor: 'lightcyan', borderColor: 'blue'}}
         borderBottomLeftRadius={54}
-
       >
         <Card.Title h1> {file.title}</Card.Title>
         <Card.Divider />
@@ -119,8 +118,9 @@ const Single = ({route}) => {
         <Text style={styles.description}>{file.description}</Text>
         <Card.Divider />
 
-        <Card.Title style={{color:"grey"}}>{moment(file.time_added).format('LLL')}</Card.Title>
-
+        <Card.Title style={{color: 'grey'}}>
+          {moment(file.time_added).format('LLL')}
+        </Card.Title>
       </Card>
 
       <Card
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 10,
-    fontSize:19,
+    fontSize: 19,
   },
 });
 

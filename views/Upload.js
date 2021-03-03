@@ -159,6 +159,7 @@ const Upload = ({navigation}) => {
             label="description"
             labelStyle={{color:"#1ABBD1"}}
           />
+
           <Button
             title="Choose from library"
             onPress={() => pickImage(true)}

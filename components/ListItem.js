@@ -16,21 +16,21 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
   const {setUpdate, update} = useContext(MainContext);
   const [like, setLike] = useState(true);
 
-  /*const doLike = async () => {
+  const doLike = async () => {
     try {
       setLike(!like);
       if (like) {
         Alert.alert('Message', 'You liked this pet!');
       }
       const userToken = await AsyncStorage.getItem('userToken');
-      const favResponse = await likeAnImage(fileId, userToken);
+      const favResponse = await likeAnImage(file_id, userToken);
       console.log('posting user like', favResponse);
     } catch (error) {
       console.log('error');
     }
   };
-  */
-  const save = async () => {
+
+  /*const save = async () => {
     try {
       setLike(!like);
       if (like) {
@@ -57,7 +57,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
   useEffect(() => {
     load();
   }, []);
-
+*/
   const doDelete = () => {
     Alert.alert(
       'Delete',
@@ -118,7 +118,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
         ></Avatar>
 
         <View style={{flexDirection: 'row', alignContent: 'center'}}>
-          <TouchableOpacity onPress={save}>
+          <TouchableOpacity onPress={doLike}>
             <Icon
               raised
               name={like ? 'thumbs-up' : 'thumbs-up'}
