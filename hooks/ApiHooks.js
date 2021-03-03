@@ -153,17 +153,17 @@ const useFavorite = () => {
       method: 'POST',
       headers: {'x-access-token': token},
       body: JSON.stringify({
-        file_id: fileId
-    }),
+        file_id: fileId,
+      }),
     };
     try {
-      const result = await doFetch(baseUrl + 'favourites/', options);
+      const result = await doFetch(baseUrl + 'favourites', options);
       return result;
     } catch (error) {
       throw new Error('liked function error: ' + error.message);
     }
   };
-  return {likeAnImage}
+  return {likeAnImage};
 };
 
 const useMedia = () => {
@@ -212,8 +212,6 @@ const useMedia = () => {
       throw new Error('deleteFile error: ' + error.message);
     }
   };
-
-
 
   return {upload, updateFile, deleteFile};
 };

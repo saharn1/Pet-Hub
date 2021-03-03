@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/Variables';
 import {Avatar, Icon, ListItem as RNEListItem} from 'react-native-elements';
@@ -16,19 +16,47 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
   const {setUpdate, update} = useContext(MainContext);
   const [like, setLike] = useState(true);
 
-  const doLike = async () => {
+  /*const doLike = async () => {
     try {
       setLike(!like);
       if (like) {
         Alert.alert('Message', 'You liked this pet!');
       }
       const userToken = await AsyncStorage.getItem('userToken');
-      const resp = await likeAnImage(flle_id, userToken);
-      console.log('posting user like', resp);
+      const favResponse = await likeAnImage(fileId, userToken);
+      console.log('posting user like', favResponse);
     } catch (error) {
       console.log('error');
     }
   };
+  */
+  const save = async () => {
+    try {
+      setLike(!like);
+      if (like) {
+        Alert.alert('Message', 'You liked this pet!');
+      }
+      await AsyncStorage.setItem('key', JSON.stringify(like));
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const load = async () => {
+    try {
+      let fav = await AsyncStorage.getItem('key');
+
+      if (fav !== null) {
+        setLike(!JSON.parse(fav));
+      }
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
 
   const doDelete = () => {
     Alert.alert(
@@ -90,7 +118,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
         ></Avatar>
 
         <View style={{flexDirection: 'row', alignContent: 'center'}}>
-          <TouchableOpacity onPress={doLike}>
+          <TouchableOpacity onPress={save}>
             <Icon
               raised
               name={like ? 'thumbs-up' : 'thumbs-up'}
@@ -113,7 +141,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
         </View>
       </View>
       <RNEListItem.Content>
-        <RNEListItem.Title h2 style={{alignSelf: 'center', color: '#1ABBD1',}}>
+        <RNEListItem.Title h2 style={{alignSelf: 'center', color: '#1ABBD1'}}>
           {singleMedia.title}
         </RNEListItem.Title>
 
