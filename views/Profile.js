@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, ActivityIndicator} from 'react-native';
+import {StyleSheet, ActivityIndicator, Alert} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,17 +11,21 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
-import {useTag,use} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/Variables';
 import {ScrollView} from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
-
+import {useMedia, useTag} from '../hooks/ApiHooks';
+import { View } from 'react-native';
 
 const Profile = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
+  const [image, setImage] = useState(null);
+  const {upload} = useMedia();
+  const [isUploading, setIsUploading] = useState(false);
   const [avatar, setAvatar] = useState('http://placekitten.com/640');
   const [filetype, setFiletype] = useState('');
   const {getFilesByTag} = useTag();
+  const {postTag} = useTag();
 
   const logout = async () => {
     setIsLoggedIn(false);
@@ -34,7 +38,7 @@ const Profile = ({navigation}) => {
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
-        const avatarList = await getFilesByTag('_avatar' + user.user_id);
+        const avatarList = await getFilesByTag('avatar_' + user.user_id);
         if (avatarList.length > 0) {
           setAvatar(uploadsUrl + avatarList.pop().filename);
         }
@@ -43,6 +47,16 @@ const Profile = ({navigation}) => {
       }
     };
     fetchAvatar();
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const {status} = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+          alert(
+            'Sorry, we need camera roll and camera permissions to make this work!'
+          );
+        }
+      }
+    })();
   }, []);
 
   const pickImage = async (library) => {
@@ -64,11 +78,57 @@ const Profile = ({navigation}) => {
     if (!result.cancelled) {
       setFiletype(result.type);
       setAvatar(result.uri);
+      setImage(result.uri);
     }
   };
 
-  const UploadImg = async () => {
-  avatar
+  const doUpload = async () => {
+    const formData = new FormData();
+    // add text to formData
+    formData.append('title', 'profile');
+
+    // add image to formData
+    const filename = image.split('/').pop();
+    const match = /\.(\w+)$/.exec(filename);
+    let type = match ? `${filetype}/${match[1]}` : filetype;
+    if (type === 'image/jpg') type = 'image/jpeg';
+    formData.append('file', {
+      uri: image,
+      name: filename,
+      type: type,
+    });
+    try {
+      setIsUploading(true);
+      const userToken = await AsyncStorage.getItem('userToken');
+      const resp = await upload(formData, userToken);
+      console.log('upload response', resp);
+      const tagResponse = await postTag(
+        {
+          file_id: resp.file_id,
+          tag: 'avatar_' + user.user_id,
+        },
+        userToken
+      );
+      console.log('posting app identifier', tagResponse);
+      Alert.alert(
+        'How nice!',
+        'Profile picture changed',
+        [
+          {
+            text: 'Ok',
+            onPress: () => {
+              navigation.navigate('Home');
+            },
+          },
+        ],
+        {cancelable: false}
+      );
+    } catch (error) {
+      Alert.alert('Upload', 'Failed');
+      console.error(error);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -80,20 +140,47 @@ const Profile = ({navigation}) => {
           </Text>
         </Card.Title>
         <Card.Image
-          onPress={() => pickImage(true)}
-          buttonStyle={{backgroundColor: '#1ABBD1', size: 20, marginBottom: 20}}
           source={{uri: avatar}}
           style={styles.image}
           PlaceholderContent={<ActivityIndicator />}
         />
-        <Button
-          icon={<Icon name="image" type="font-awesome-5" size={20} color="white" containerStyle={{marginHorizontal:10}}/>}
+        <View style={[{ width: "55%", margin: 10,alignSelf:"center",marginTop:18 }]}>
+           <Button
+          icon={
+            <Icon
+              name="hand-pointer"
+              type="font-awesome-5"
+              size={20}
+              color="white"
+              containerStyle={{marginHorizontal: 10}}
+            />
+          }
           iconLeft
-          title="Change profile image"
-          buttonStyle={{backgroundColor:"orange"}}
+          title="Select an image"
+          buttonStyle={{backgroundColor: '#1ABBD1', size: 20,borderRadius:20}}
           raised
-          onPress={console.log("picture changed")}
+          onPress={() => pickImage(true)}
         />
+        </View>
+        <View style={[{ width: "65%", margin: 10,alignSelf:"center",marginBottom:18 }]}>
+        <Button
+          icon={
+            <Icon
+              name="image"
+              type="font-awesome-5"
+              size={20}
+              color="white"
+              containerStyle={{marginHorizontal: 10}}
+            />
+          }
+          iconLeft
+          title="Upload profile image"
+          buttonStyle={{backgroundColor: 'orange'}}
+          raised
+          onPress={doUpload}
+          buttonStyle={{backgroundColor: '#1ABBD1', size: 20,borderRadius:20}}
+        />
+        </View>
 
         <ListItem>
           <Avatar icon={{name: 'email', color: '#1ABBD1'}} />

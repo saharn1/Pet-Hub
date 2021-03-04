@@ -12,7 +12,7 @@ import {View} from 'react-native';
 const ListItem = ({navigation, singleMedia, isMyFile}) => {
   // console.log(props);
   const {deleteFile} = useMedia();
-  const {likeAnImage} = useFavorite();
+  const {likeAnImage, loadLikes} = useFavorite();
   const {setUpdate, update} = useContext(MainContext);
   const [like, setLike] = useState(true);
 
@@ -23,13 +23,32 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
         Alert.alert('Message', 'You liked this pet!');
       }
       const userToken = await AsyncStorage.getItem('userToken');
-      const favResponse = await likeAnImage(file_id, userToken);
+      const favResponse = await likeAnImage(singleMedia.file_id, userToken);
       console.log('posting user like', favResponse);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadlike = async () => {
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      const favResponse = await loadLikes(userToken);
+
+      favResponse.forEach((item) => {
+        console.log('posting user like', item);
+        if (item.file_id === singleMedia.file_id) {
+          setLike(false);
+        }
+      });
     } catch (error) {
       console.log('error');
     }
   };
 
+  useEffect(() => {
+    loadlike();
+  }, []);
   /*const save = async () => {
     try {
       setLike(!like);
@@ -41,11 +60,9 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       alert(err);
     }
   };
-
   const load = async () => {
     try {
       let fav = await AsyncStorage.getItem('key');
-
       if (fav !== null) {
         setLike(!JSON.parse(fav));
       }
@@ -53,7 +70,6 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       alert(err);
     }
   };
-
   useEffect(() => {
     load();
   }, []);
@@ -65,7 +81,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       [
         {text: 'Cancel'},
         {
-          title: 'Ok',
+          text: 'Ok',
           onPress: async () => {
             const userToken = await AsyncStorage.getItem('userToken');
             try {
@@ -81,7 +97,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       {cancelable: false}
     );
   };
-
+  console.log('valueOfLike : ', like);
   return (
     <RNEListItem
       containerStyle={{
